@@ -1,7 +1,7 @@
-import os, random
+import os
+import nameArray
 
-nums = list(range(len(os.listdir('test'))))
-random.shuffle(nums)
+nums = nameArray.int_array_random(len(os.listdir('test')))
 
 def rename(newNames):
 	for i, f in enumerate(os.listdir('test')):
