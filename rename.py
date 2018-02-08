@@ -11,6 +11,6 @@ def rename(newNames):
 if __name__ == '__main__':
 	os.chdir(sys.argv[1])
 
-	nums = nameArray.int_array_random(len(os.listdir()))
+	nums = nameArray.int_array_random(len(os.listdir()), 10)
 
 	rename(nums)
