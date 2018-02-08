@@ -1,13 +1,15 @@
-import os
+import os, sys
 import nameArray
 
-nums = nameArray.int_array_random(len(os.listdir('test')))
+os.chdir(sys.argv[1])
+
+nums = nameArray.int_array_random(len(os.listdir()))
 
 def rename(newNames):
-	for i, f in enumerate(os.listdir('test')):
+	for i, f in enumerate(os.listdir()):
 		extention = os.path.splitext(f)[1]
 		oldFile = f
 		newFile = "%d%s"%(newNames[i], extention)
-		os.rename('test/' + oldFile, 'test/' + newFile)
+		os.rename(oldFile, newFile)
 
 rename(nums)
