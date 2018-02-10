@@ -1,12 +1,19 @@
 import os, sys, argparse
 import nameArray
 
-def rename(newNames, prefix, suffix):
-	for i, f in enumerate(os.listdir()):
-		extention = os.path.splitext(f)[1]
-		oldFile = f
-		newFile = "{}{}{}".format(prefix, newNames[i], suffix)
-		os.rename(oldFile, newFile)
+def rename(prefix, suffix, newNames = None):
+	if newNames != None:
+		for i, f in enumerate(os.listdir()):
+			extention = os.path.splitext(f)[1]
+			oldFile = f
+			newFile = "{}{}{}".format(prefix, newNames[i], suffix)
+			os.rename(oldFile, newFile)
+	else:
+		for f in os.listdir():
+			extention = os.path.splitext(f)[1]
+			oldFile = f
+			newFile = "{}{}{}".format(prefix, oldFile, suffix)
+			os.rename(oldFile, newFile)
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description = "Renames all files in a directory")
@@ -31,7 +38,7 @@ if __name__ == '__main__':
 	if not (args.o >= 0):
 		parser.error('-o must be a positive int')
 
-	names = []
+	names = None
 	size = len(os.listdir(args.dir))
 	offset = args.o
 	if args.i:
@@ -54,4 +61,4 @@ if __name__ == '__main__':
 			names = nameArray.hex_array(size, offset)
 
 	os.chdir(args.dir)
-	rename(names, args.pre, args.suf)
+	rename(args.pre, args.suf, names)
