@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, argparse
 import nameArray
 
 def rename(newNames, prefix, suffix):
@@ -9,10 +9,5 @@ def rename(newNames, prefix, suffix):
 		os.rename(oldFile, newFile)
 
 if __name__ == '__main__':
-	os.chdir(sys.argv[1])
-	prefix = sys.argv[2]
-	suffix = sys.argv[3]
-
-	nums = nameArray.hex_array_random_padded(len(os.listdir()), 7)
-
-	rename(nums, prefix, suffix)
+	parser = argparse.ArgumentParser(description = "Renames all files in a directory")
+	parser.print_help()
