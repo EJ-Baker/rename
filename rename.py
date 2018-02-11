@@ -6,13 +6,13 @@ def rename(prefix, suffix, newNames = None):
 		for i, f in enumerate(os.listdir()):
 			extention = os.path.splitext(f)[1]
 			oldFile = f
-			newFile = "{}{}{}".format(prefix, newNames[i], suffix)
+			newFile = "{}{}{}{}".format(prefix, newNames[i], suffix, extention)
 			os.rename(oldFile, newFile)
 	else:
 		for f in os.listdir():
 			extention = os.path.splitext(f)[1]
-			oldFile = f
-			newFile = "{}{}{}".format(prefix, oldFile, suffix)
+			oldFile = os.path.splitext(f)[0]
+			newFile = "{}{}{}{}".format(prefix, oldFile, suffix, extention)
 			os.rename(oldFile, newFile)
 
 def __getnames(directory, prefix, suffix, newNames = None):
@@ -20,13 +20,13 @@ def __getnames(directory, prefix, suffix, newNames = None):
 	if newNames != None:
 		for i, f in enumerate(os.listdir(directory)):
 			extention = os.path.splitext(f)[1]
-			newFile = "{}{}{}".format(prefix, newNames[i], suffix)
+			newFile = "{}{}{}{}".format(prefix, newNames[i], suffix, extention)
 			names.append(newFile)
 	else:
 		for f in os.listdir(directory):
 			extention = os.path.splitext(f)[1]
-			oldFile = f
-			newFile = "{}{}{}".format(prefix, oldFile, suffix)
+			oldFile = os.path.splitext(f)[0]
+			newFile = "{}{}{}{}".format(prefix, oldFile, suffix, extention)
 			names.append(newFile)
 
 	return names
