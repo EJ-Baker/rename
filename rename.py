@@ -15,7 +15,56 @@ def rename(prefix, suffix, newNames = None):
 			newFile = "{}{}{}".format(prefix, oldFile, suffix)
 			os.rename(oldFile, newFile)
 
+def __getnames(directory, prefix, suffix, newNames = None):
+	names = []
+	if newNames != None:
+		for i, f in enumerate(os.listdir(directory)):
+			extention = os.path.splitext(f)[1]
+			newFile = "{}{}{}".format(prefix, newNames[i], suffix)
+			names.append(newFile)
+	else:
+		for f in os.listdir(directory):
+			extention = os.path.splitext(f)[1]
+			oldFile = f
+			newFile = "{}{}{}".format(prefix, oldFile, suffix)
+			names.append(newFile)
+
+	return names
+
+def __verbose1(directory):
+	numFiles = len(os.listdir(directory))
+	print ('Rename {} files in {}'.format(numFiles, directory))
+	answer = input('Y?\n')
+	if answer[0] != 'y' and answer[0] != 'Y':
+		sys.exit()
+
+def __verbose2(directory):
+	for f in os.listdir(directory):
+		print(f)
+
+	numFiles = len(os.listdir(directory))
+	print ('\nRename {} files in {}'.format(numFiles, directory))
+	answer = input('Y?\n')
+	if answer[0] != 'y' and answer[0] != 'Y':
+		sys.exit()
+
+def __verbose3(directory, prefix, suffix, newNames = None):
+	names = []
+	if newNames == None:
+		names = __getnames(directory, prefix, suffix)
+	else:
+		names = __getnames(directory, prefix, suffix, newNames)
+	for i, f in enumerate(os.listdir(directory)):
+		print('{} {}'.format(f, names[i]))
+
+	numFiles = len(os.listdir(directory))
+	print ('\nRename {} files in {}'.format(numFiles, directory))
+	answer = input('Y?\n')
+	if answer[0] != 'y' and answer[0] != 'Y':
+		sys.exit()
+
 if __name__ == '__main__':
+	#parsing
 	parser = argparse.ArgumentParser(description = "Renames all files in a directory")
 	parser.add_argument('dir', nargs = '?', default = os.getcwd(), help = 'the directory to rename, default cwd')
 	parser.add_argument('-pre', '-prefix', default = '', help = 'a string to prepend the files', metavar = 'PREFIX')
@@ -39,11 +88,13 @@ if __name__ == '__main__':
 
 	args = parser.parse_args()
 
+	#dependencies
 	if not (args.i or args.x) and (args.r or args.p or args.o):
 		parser.error('-r -p -o are dependent on -i or -x')
 	if not (args.o >= 0):
 		parser.error('-o must be a positive int')
 
+	#logic
 	names = None
 	size = len(os.listdir(args.dir))
 	offset = args.o
@@ -65,6 +116,14 @@ if __name__ == '__main__':
 			names = nameArray.hex_array_padded(size, offset)
 		else:
 			names = nameArray.hex_array(size, offset)
+
+	if not args.q:
+		if args.v > 2:
+			__verbose3(args.dir, args.pre, args.suf, names)
+		elif args.v == 2:
+			__verbose2(args.dir)
+		else:
+			__verbose1(args.dir)
 
 	os.chdir(args.dir)
 	rename(args.pre, args.suf, names)
