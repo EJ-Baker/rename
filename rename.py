@@ -31,6 +31,12 @@ if __name__ == '__main__':
 	parser.add_argument('-o', '-offset', default = 0, type = int,
 		help = 'adds an offset for -i or -x to start from, dependent on -i or -x', metavar = 'OFFSET')
 
+	group2 = parser.add_mutually_exclusive_group()
+	group2.add_argument('-v', '-verbose', action = 'count', default = 1,
+		help = 'adds confirmation and dislpays information about what is being renamed')
+	group2.add_argument('-q', '-quiet', action = 'store_true',
+		help = 'removes confirmation and information about what is being renamed')
+
 	args = parser.parse_args()
 
 	if not (args.i or args.x) and (args.r or args.p or args.o):
