@@ -95,7 +95,9 @@ if __name__ == '__main__':
 		parser.error('-o must be a positive int')
 
 	if not os.path.exists(args.dir):
-		parser.error('{} does not exist'.format(args.dir))	
+		parser.error('{} does not exist'.format(args.dir))
+	if os.path.isfile(args.dir):
+		parser.error('{} must be a directory'.format(args.dir))
 
 	#logic
 	names = None
