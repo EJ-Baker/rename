@@ -1,7 +1,7 @@
 # rename
 
 This is a command line application designed to rename all of the files inside of a directory. I use it to rename pictures mostly. It can add prefixes and suffixes to files which is useful for tagging photos. It can rename all of the files as ints which is useful when dealing with scanned pictures. It can also randomize the order of files. I use this for slideshows that are being played on smart TVs that don’t support randomizing the picture order.
-##### help message
+#### help message
 ```
 usage: rename.py [-h] [-pre PREFIX] [-suf SUFFIX] [-i | -x] [-r] [-p]
                  [-o OFFSET] [-v | -q]
@@ -33,7 +33,7 @@ optional arguments:
                         being renamed
 ```
 
-##### examples
+#### examples
 Adding a prefix to vacation photos
 ```
 python rename.py C:\Users\EJ-Baker\Pictures\vacation -pre Florida_
